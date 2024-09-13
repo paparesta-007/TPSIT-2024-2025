@@ -15,6 +15,31 @@ const films = [
 //window.addEventListener("load", function () {
 window.onload = function() {
 
-    
+    const _tbody= document.getElementsByTagName("body")[0];
+    //const tbody=document.querySelector("body");
+    //const tbody=document.querySelectorAll("body")[0];
+    visualizza();
+    function visualizza(){
+        for(let i=0;i<films.length;i++){
+            const riga=document.createElement("tr");
+            _tbody.appendChild(riga);
 
+            for (let j = 0; j < films[i].length; j++) {
+                const td=document.createElement("td");
+                td.textContent=films[i][j]
+                if(j==2){
+                    const chk=document.createElement("input");
+                    chk.type="checkbox";
+                    chk.checked;
+                    chk.readOnly;
+                    
+                }
+                else
+
+                
+                riga.appendChild(td);
+                
+            }
+        }
+    }
 }
