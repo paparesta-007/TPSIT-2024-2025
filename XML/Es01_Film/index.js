@@ -13,16 +13,20 @@ const films = [
 
 window.onload = function () {
   let _tbody = document.querySelector("tbody");
-  let _btnAdd = document.querySelector("#btn-add");
-  let _btnClear = document.querySelector("#btn-clear");
-  let _btnReload = document.querySelector("#btn-reload");
+  let _btnAdd = document.getElementById("btn-add");
+  let _btnClear = document.getElementById("btn-clear");
+  let _btnReload = document.getElementById("btn-reload");
+  let _btnCount = document.getElementById("btn-count");
+  let _btnLogin = document.getElementById("btn-login");
 
   _btnAdd.addEventListener("click", aggiungiFilm);
-  function aggiungiFilm() {}
 
   visualizza();
 
   function visualizza() {
+
+    _tbody.innerHTML = ''; // Clear the table body before re-rendering
+
     for (let i = 0; i < films.length; i++) {
       let riga = document.createElement("tr");
       _tbody.appendChild(riga);
@@ -30,7 +34,6 @@ window.onload = function () {
       for (let j = 0; j < films[i].length; j++) {
         let td = document.createElement("td");
 
-        // Caso checkbox per il terzo elemento
         if (j == 2) {
           let chk = document.createElement("input");
           chk.type = "checkbox";
@@ -38,14 +41,14 @@ window.onload = function () {
           chk.disabled = true;
           td.appendChild(chk);
         } else if (j == 4) {
-          //se sono nella colonna del rating
-          let contStelle = films[i][j];
-          for (let k = 0; k < contStelle; k++) {
-            td.textContent += "★";
-          }
-          for (let l = 0; l < 5 - contStelle; l++) {
-            // stampa stelle vuote rimanenti se voto non è 5/5
-            td.textContent += "☆";
+          for (let k = 0; k < 5; k++) {
+            const icon = document.createElement("i");
+            icon.classList.add("bi");
+            if (k < films[i][j])
+              icon.classList.add("bi-star-fill");
+            else
+              icon.classList.add("bi-star");
+            td.appendChild(icon);
           }
         } else {
           td.textContent = films[i][j];
@@ -54,5 +57,23 @@ window.onload = function () {
         riga.appendChild(td);
       }
     }
+  }
+
+  function aggiungiFilm() {
+    let id = films.length + 1;
+    let title = prompt("Inserisci il nome del film: ");
+    let favourite = Math.random(0,2); 
+    let date = new Date();
+    let strDate = date.toLocaleDateString();
+    let rating = random(1, 6); 
+
+    let rigaNuova = [id, title, favourite, strDate, rating];
+    films.push(rigaNuova);
+
+    visualizza(); 
+  }
+
+  function random(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
   }
 };
