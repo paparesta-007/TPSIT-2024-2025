@@ -20,6 +20,15 @@ window.onload = function () {
   let _btnLogin = document.getElementById("btn-login");
 
   _btnAdd.addEventListener("click", aggiungiFilm);
+  _btnClear.addEventListener("click",function(){
+    _tbody.innerHTML=""
+  })
+  _btnReload.addEventListener("click",function(){
+    window.location.reload();
+  })
+  _btnCount.addEventListener("click",function(){
+    const _modalCount=document.getElementById
+  })
 
   visualizza();
 
