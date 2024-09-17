@@ -20,21 +20,39 @@ window.onload = function () {
   let _btnLogin = document.getElementById("btn-login");
 
   _btnAdd.addEventListener("click", aggiungiFilm);
-  _btnClear.addEventListener("click",function(){
-    _tbody.innerHTML=""
-  })
-  _btnReload.addEventListener("click",function(){
+  _btnClear.addEventListener("click", function () {
+    _tbody.innerHTML = "";
+  });
+  _btnReload.addEventListener("click", function () {
     window.location.reload();
-  })
-  _btnCount.addEventListener("click",function(){
-    const _modalCount=document.getElementById
-  })
+  });
+  _btnCount.addEventListener("click", function () {
+    const spanN = document.getElementById("span-n-films");
+    spanN.innerText = films.length;
+    const modalCount = new bootstrap.Modal(
+      document.getElementById("modal-count-films")
+    );
+    modalCount.show();
+  });
+
+  _btnLogin.addEventListener("click", function () {
+    console.log("Login");
+    visualizzaLogin();
+    setTimeout(nascondiLogin, 3000);
+  });
+  function visualizzaLogin() {
+    let alertLogin = document.getElementById("alert-login");
+    alertLogin.classList.remove("d-none");
+  }
+  function nascondiLogin() {
+    let alertLogin = document.getElementById("alert-login");
+    alertLogin.classList.add("d-none");
+  }
 
   visualizza();
 
   function visualizza() {
-
-    _tbody.innerHTML = ''; // Clear the table body before re-rendering
+    _tbody.innerHTML = "";
 
     for (let i = 0; i < films.length; i++) {
       let riga = document.createElement("tr");
@@ -53,10 +71,8 @@ window.onload = function () {
           for (let k = 0; k < 5; k++) {
             const icon = document.createElement("i");
             icon.classList.add("bi");
-            if (k < films[i][j])
-              icon.classList.add("bi-star-fill");
-            else
-              icon.classList.add("bi-star");
+            if (k < films[i][j]) icon.classList.add("bi-star-fill");
+            else icon.classList.add("bi-star");
             td.appendChild(icon);
           }
         } else {
@@ -71,15 +87,15 @@ window.onload = function () {
   function aggiungiFilm() {
     let id = films.length + 1;
     let title = prompt("Inserisci il nome del film: ");
-    let favourite = Math.random(0,2); 
+    let favourite = Math.random(0, 2);
     let date = new Date();
     let strDate = date.toLocaleDateString();
-    let rating = random(1, 6); 
+    let rating = random(1, 6);
 
     let rigaNuova = [id, title, favourite, strDate, rating];
     films.push(rigaNuova);
 
-    visualizza(); 
+    visualizza();
   }
 
   function random(min, max) {
