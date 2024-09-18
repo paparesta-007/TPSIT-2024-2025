@@ -1,6 +1,6 @@
 "use strict";
 
-const films = [
+let films = [
   // Id, Title, Favorite, Watch date, Rating (0-5)
   [1, "Pulp Fiction", true, "10-03-2024", 5],
   [2, "21 Grammi", true, "17-03-2024", 3],
@@ -21,7 +21,8 @@ window.onload = function () {
 
   _btnAdd.addEventListener("click", aggiungiFilm);
   _btnClear.addEventListener("click", function () {
-    _tbody.innerHTML = "";
+    films=[];
+    visualizza();
   });
   _btnReload.addEventListener("click", function () {
     window.location.reload();
