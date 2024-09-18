@@ -1,15 +1,15 @@
 const songs = [
     // Id, Name, Author, Album, Duration(s), Gender, Streams
-    [1, "m.A.A.d. city", "Kendrick Lamar", "good kid, m.A.A.d. city", 244, "Pop", 12000000],
-    [2, "Blinding Lights", "The Weeknd", "After Hours", 200, "Rap", 1500000000],
-    [3, "Torcida", "Bresh", "Torcida", 174, "Rap", 5000000],
-    [4, "Somebody (2024)", "Gotye & Fisher & Kimbra", "Somebody (2024)", 154, "Rock", 7000000000],
-    [5, "2minuti", "Calcutta", "RELAX", 214, "Rap", 34000000],
-    [6, "Anime Libere", "Tedua & Rkomi & Bresh", "La divina commedia", 173, "Pop", 28000000],
-    [7, "Black Dogs' Old Blues", "I Belli da Vedere", "Cambiare Vita", 164, "Pop", "Veramente troppe"],
-    [8, "Aglio e olio", "Fulminacci & Willie Peyote", "Tante care cose e altri successi", 226, "Rap", 5000000],
-    [9, "Intro", "The xx", "xx", 128, "Rock", 640000000],
-    [10, "LA CANZONE NOSTRA", "MACE & Blanco & Salmo", "OBE", 237, "Rap", 130000000],
+    [1, "La Nuova Stella di Broadway", "Cesare Cremonini", "La teoria dei colori", 267, "Indie", 40064599],
+    [2, "Girls Like You", "Maroon 5 & Cardi B", "Red Pill Blues (Deluxe)", 236, "Pop", 414022938],
+    [3, "The Nights", "Avicii", "The Days / Nights", 177, "Pop", 1879666497],
+    [4, "A Sky Full Of Stars", "Coldplay", "Ghost Stories", 267, "Indie Rock", 1635000396],
+    [5, "Tutti", "Calcutta", "RELAX", 251, "Indie", 34000000],
+    [6, "Red Light", "Tedua", "La divina commedia", 168, "Rap", 62830552],
+    [7, "Le Luci Della Città", "Coez", "Faccio un casino", 177, "Indie", 110062838],
+    [8, "Morto Mai (piano solo)", "Lazza", "Re Mida (aurum)", 160, "Rap", 54423236],
+    [9, "I Wanna Be Yours", "Arctic Monkeys", "AM", 184, "Indie Rock", 2436311396],
+    [10, "Ballas RMX", "Diss Gacha & Sala & Janga ODT & Mambolosco", "Ballas RMX (Diss Gacha & Sala & Janga ODT & Mambolosco)", 154, "Rap", 13220170],
     
 ];
 

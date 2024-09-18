@@ -8,3 +8,13 @@ h1{
 	font-size: 3.5em;
 	padding:15px;
 }
+.modal-body>a{
+	color: gray;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+
+.modal-body>a:hover{
+    color: blue;
+	text-decoration: underline;
+}

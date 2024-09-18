@@ -27,9 +27,10 @@ window.addEventListener("load", function() {
         }
         
         content.innerHTML = "";
-        title.textContent = `Numero di dischi ${gender}: `;
 
+        content.appendChild(title)
         for (const song of songs) {
+            
             if (gender === "" || song[5] === gender) {
                 cont++;
                 
@@ -79,32 +80,41 @@ window.addEventListener("load", function() {
 				_divInfo.appendChild(pGender)
 
 				const pStream=document.createElement("p");
-				pStream.textContent="Riprodizioni: "+song[6].toLocaleString();
+				pStream.textContent="Riproduzioni: "+song[6].toLocaleString();
 				_divInfo.appendChild(pStream);
 
 				const btnPlay=document.createElement("button");
 				btnPlay.classList.add("btn","btn-secondary");
 				btnPlay.textContent="Play";
 				btnPlay.addEventListener("click",function(){
-					const newModal=new bootstrap.Modal("#play-modal");
+					const newModal = new bootstrap.Modal("#play-modal");
+                    const spanArtist=document.getElementById("song-artist-modal");
+                    spanArtist.textContent=song[2]; 
+                    spanArtist.style.color="gray"
 					const spanSong=document.getElementById("song-title-modal");
 					spanSong.textContent=song[1];
+                    newModal.show();
 				})
 				_divInfo.appendChild(btnPlay)
             }
         }
+                
+        title.textContent = `Numero di dischi ${gender === "" ? "" : gender}: ${cont}`;
 
-        title.textContent += cont;
+  
     }
 
     function genderClick() {
-		for(const li of genderElements){
-			const a=li.firstChild;
-			a.classList.add("active");
-		}
-		this.firstElementChild.classList.add("active");
+        for (const li of genderElements) {
+            const a = li.firstChild;
+            a.classList.remove("active"); 
+        }
+        
+        this.firstElementChild.classList.add("active");
+    
         loadSongs(this.textContent);
     }
+    
 
     function showAlert() {
         
