@@ -11,6 +11,7 @@ window.addEventListener("load", function() {
     const iFriends = document.getElementById("i-friends");
     iFriends.addEventListener("click", showAlert);
 
+    let searchOn=false;
     const alertFriends = document.getElementById("alert-friends");
     const iSearch = document.getElementById("i-search");
     iSearch.addEventListener("click", toggleSearch);
@@ -117,10 +118,23 @@ window.addEventListener("load", function() {
     
 
     function showAlert() {
-        
+         visualizzaFriends();
+         setTimeout(nascondiFriends,3000);
+    }
+    function visualizzaFriends() {
+        alertFriends.classList.remove("d-none");
+    }
+    function nascondiFriends() {
+        alertFriends.classList.add("d-none");
     }
 
     function toggleSearch() {
-       
-    }
+        searchOn = !searchOn; // Inverti lo stato
+     
+        if (searchOn) {
+           document.getElementById("txt-search").classList.remove("d-none"); // Mostra l'elemento
+        } else {
+           document.getElementById("txt-search").classList.add("d-none"); // Nascondi l'elemento
+        }
+     }
 });
