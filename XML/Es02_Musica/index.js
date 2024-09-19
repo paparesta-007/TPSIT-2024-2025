@@ -19,6 +19,7 @@ window.addEventListener("load", function() {
     const txtSearch = document.getElementById("txt-search");
     const title = document.createElement("h3");
     content.appendChild(title);
+
     loadSongs("All");
 
     function loadSongs(gender) {
