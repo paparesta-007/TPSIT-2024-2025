@@ -37,7 +37,7 @@ window.onload = function () {
 	// const femalePersons = xmlRoot.querySelectorAll("female > person");
 
 	loadMale();
-
+     
 	function loadMale() {
 		table.innerHTML = ""; // Pulizia della tabella
 
