@@ -34,7 +34,7 @@ window.onload = function () {
 	const xmlRoot = xmlDOC.documentElement;
 
 	const malePersons = xmlRoot.querySelectorAll("male > person");
-	const femalePersons = xmlRoot.querySelectorAll("female > person");
+	// const femalePersons = xmlRoot.querySelectorAll("female > person");
 
 	loadMale();
 
