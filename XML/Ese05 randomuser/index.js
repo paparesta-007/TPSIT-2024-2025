@@ -43,7 +43,7 @@ window.onload = function () {
 
 		const start = currentPage * recordsPerPage; // Calcola l'indice di partenza
 		const end = start + recordsPerPage; // Calcola l'indice finale
-
+		
 		for (const maschi of malePersons) {
 			// Usa un ciclo for...of per iterare solo sui record della pagina attuale
 			if (Array.from(malePersons).indexOf(maschi) >= start && Array.from(malePersons).indexOf(maschi) < end) {
@@ -76,6 +76,38 @@ window.onload = function () {
 				td.style.height = "20px";
 				td.style.backgroundRepeat = "no-repeat";
 				td.style.backgroundOrigin = "content-box";
+				td.addEventListener("click", function () {
+					details.innerHTML = "";  
+					let emailNode = maschi.querySelector("email"); 
+					let email = document.createElement("p");
+				
+					if (emailNode) {
+						email.textContent = emailNode.textContent;
+						// console.log(emailNode.textContent);
+					} else {
+						console.log("Errore nel recupero dell'email");
+					}
+					details.appendChild(email);
+
+					let imageNode=maschi.querySelector("picture > large");
+					let img=document.createElement("img");
+					if(imageNode){
+						
+					img.src=imageNode.textContent;
+					}
+					
+					details.appendChild(img)
+
+
+					let numberNode = maschi.querySelector("phone");
+					let number = document.createElement("p");
+					if (numberNode) {
+						number = numberNode.textContent;
+					}
+					details.appendChild(number);
+
+				});
+				
 				tr.appendChild(td);
 
 				td = document.createElement("td");

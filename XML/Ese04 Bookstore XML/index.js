@@ -433,7 +433,10 @@ window.onload=function(){
 		}
 		else
 		{
-			//gestione PULSANTE SALVA SU DISCO
+			let serializer= new XMLSerializer();
+			let xmlSerializer=serializer.serializeToString(xmlDOC);
+			localStorage.setItem("bookstore_xml",xmlSerializer);
+			alert("Bookstore caricato")
 		}
 	}
 }
