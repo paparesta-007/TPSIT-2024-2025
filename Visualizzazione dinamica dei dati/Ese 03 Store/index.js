@@ -1,69 +1,84 @@
-"use strict";
+'use strict'
 
-window.addEventListener("load", function () {
-  const content = document.getElementById("content");
-  let contProdotti = 0;
-  const btnSearch = document.getElementById("btn-search");
-  btnSearch.addEventListener("click", showAlert);
-  const row = document.createElement("div");
-  row.classList.add("row");
-  content.appendChild(row);
-  const h3 = document.createElement("h3");
+window.onload=function(){
+    const listView = document.getElementById("list-view");
+	const divNbooks = document.querySelector(".nBooks")
+    const tBody = document.getElementById("tabLibri");
+	
+    const detailsView = document.getElementById("details-view");
+	detailsView.style.display="none";
+	const details = detailsView.querySelector(".details")
+	const spanCount = document.querySelector(".buttons span")
 
-  row.appendChild(h3);
+    const addView = document.getElementById("add-view");
+	addView.style.display="none";
+	const newDetail = addView.querySelector(".details")
+	
+	let xml = localStorage.getItem("bookstore_xml");
+	if(!xml)
+	{
+		xml = bookstore;
+	}
 
-  for (const product of products) {
-    contProdotti++;
-    // Creazione Div Princiapale
-    const mainDiv = document.createElement("div");
-    mainDiv.classList.add("col-md-4");
-    row.appendChild(mainDiv);
+	const parser = new DOMParser;
+	const xmlDOC = parser.parseFromString(xml, "text/xml");
+	//const xmlRoot = xmlDOC.documentElement;
+	const xmlRoot = xmlDOC.firstElementChild;
 
-    //Creazione Card
-    const cardDiv = document.createElement("div");
-    cardDiv.classList.add("card");
-    mainDiv.appendChild(cardDiv);
+	loadBooks();
 
-    //Creazione Immagine Card
-    const imgCard = document.createElement("img");
-    imgCard.classList.add("card-img-top");
-    imgCard.src = `./img/products/product${product[0]}.jpg`;
-    console.log(imgCard.src);
-    cardDiv.appendChild(imgCard);
+	function loadBooks(){
+		divNbooks.textContent = "Numero di libri: " + xmlRoot.children.length;  //solo figli diretti
 
-    //Creazione Body Card
-    const cardBody = document.createElement("div");
-    cardBody.classList.add("card-body");
-    cardDiv.appendChild(cardBody);
+		for (const book of xmlRoot.children) {
+      readBook(book);
+		}
+	}
+  function readBook(book){
+    let id = "";
+    let category = "";
+    let title = "";
+    let year = "";
+    let price = "";
+    let lang = "";
+    let authors = "";
 
-    //Creazione Titolo Card
-    const h5 = document.createElement("h5");
-    h5.classList.add("card-title");
-    h5.textContent = product[1];
-    cardBody.appendChild(h5);
+    if(book.hasAttribute(category))
+    {
+      category = book.getAttribute(category);
+    }
 
-    //Creazione Descrizione Card
-    const p = document.createElement("p");
-    p.classList.add("card-text");
-    let marca = product[2];
-    let display = product[3];
-    let cpu = product[4];
-    let ram = product[5];
-    let ssd = product[6];
+    //supponiamo che id sia sempre il primo campo
+    id = book.firstElementChild.textContent;
 
-    let stringInfo;
-    stringInfo = `Marca: ${marca} / Display: ${display} / Processore: ${cpu} / RAM: ${ram}GB / Memoria di massa: ${ssd}GB`;
-    p.textContent = stringInfo;
-    cardBody.appendChild(p);
+    //supponiamo che title sia sempre il secondo campo
+    const titleNode = book.children[1];
+    title = titleNode.textContent;
+
+    const yearNode = book.querySelector("year");
+    if(yearNode)
+      year = yearNode.innerHTML;
+
+    const priceNode = book.querySelector("price");
+    if(priceNode)
+      price = priceNode.innerHTML;
+
+    if(titleNode.hasAttribute("lang"))
+      lang = titleNode.getAttribute("lang");
+
+    const authorNodes = book.querySelectorAll("author");
+    
+    for (const authorNode of authorNodes) {
+      //if(authors != "")
+        //authors += " - ";
+      authors += authorNode.textContent + " - ";
+    }
+
+    if(authors != "")
+      authors = authors.substring(0, authors.length - 3);
+    
+    console.log(authors);
   }
-  h3.textContent = "Numero di prodotti: " + contProdotti;
 
-  function showAlert() {
-    document.getElementById("alert-search").classList.remove("d-none");
-    setTimeout(nascondiAlert, 3000);
-  }
 
-  function nascondiAlert() {
-    document.getElementById("alert-search").classList.add("d-none");
-  }
-});
+}
