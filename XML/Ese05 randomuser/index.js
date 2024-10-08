@@ -178,57 +178,50 @@ window.onload = function () {
 
 	// Gestione dei pulsanti di navigazione
 	primo.onclick = function () { // Primo
-		if(currentPage==1) {
-			
-			primo.disabled=true;
-			
-		}
-		ultimo.disabled=false;
-		avanti.disabled=false;
-		indietro.disabled=true;
 		currentPage = 0;
-		loadMale();
-		btns[0].disabled=true;
+		loadMale(gender); // Passa gender qui
+		btns[0].disabled = true;
+		indietro.disabled = true;
+		ultimo.disabled = false;
+		avanti.disabled = false;
 	};
-
+	
 	indietro.onclick = function () { // Indietro
 		if (currentPage > 0) {
 			currentPage--;
-			loadMale();
+			loadMale(gender); // Passa gender qui
 		}
-		if(currentPage==0) {
-			indietro.disabled=true;
-			primo.disabled=true;
-			
-			
+		if (currentPage === 0) {
+			indietro.disabled = true;
+			primo.disabled = true;
 		}
-		ultimo.disabled=false;
-		avanti.disabled=false;
+		ultimo.disabled = false;
+		avanti.disabled = false;
 	};
-
+	
 	avanti.onclick = function () { // Avanti
 		if ((currentPage + 1) * recordsPerPage < root.length) {
 			currentPage++;
-			primo.disabled=false;
-			indietro.disabled=false;
-			
+			loadMale(gender); // Passa gender qui
 		}
-		if(currentPage==(Math.ceil(root.length / recordsPerPage)-1)) {
-			ultimo.disabled=true;
-			avanti.disabled=true;
+		if (currentPage === Math.ceil(root.length / recordsPerPage) - 1) {
+			ultimo.disabled = true;
+			avanti.disabled = true;
 		}
-		loadMale();
+		primo.disabled = false;
+		indietro.disabled = false;
 	};
-
+	
 	ultimo.onclick = function () { // Ultimo
 		currentPage = Math.ceil(root.length / recordsPerPage) - 1; // Adjust to zero-based index
+		loadMale(gender); // Passa gender qui
 		primo.disabled = false;
 		indietro.disabled = false;
 		if (currentPage === Math.ceil(root.length / recordsPerPage) - 1) {
 			ultimo.disabled = true;
 			avanti.disabled = true;
 		}
-		loadMale(gender);
 	};
+	
 	
 };
