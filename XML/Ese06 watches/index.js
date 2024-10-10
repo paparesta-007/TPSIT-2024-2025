@@ -7,9 +7,12 @@ window.onload = function () {
   let lstGender = document.querySelector(".gender select");
   let btnInserisci = document.getElementsByTagName("button")[0];
   let select = document.querySelector("select");
+
   let genere = "All";
   select.addEventListener("change", function () {
     genere = this.value;
+    console.log(genere);
+    loadTable(genere);
   });
 
   let xml = localStorage.getItem("orologi_xml");
@@ -24,10 +27,12 @@ window.onload = function () {
   let xmlRoot = xmlDoc.firstElementChild;
   
 
+
   //Creazione della tabella
   loadTable(genere);
   function loadTable(genere) {
     tbody.innerHTML = "";
+    thead.innerHTML = "";
     let tr = document.createElement("tr");
     thead.appendChild(tr);
     for (const header of headers) {
@@ -43,6 +48,9 @@ window.onload = function () {
         let models=item.children;
       
         for(const model of models){
+         if (genere == "All" || gender == genere || genere == ""){
+
+         
             let code = model.querySelector("code").textContent;
             let price = model.querySelector("price").textContent;
             let watches = model.querySelector("watches");
@@ -76,8 +84,11 @@ window.onload = function () {
               tr.appendChild(td);
             }
         }
-     
+      }
 
     }
   }
+  btnInserisci.addEventListener("click", function () {
+    window.open("./inserisci.html","_blank");
+  })
 };
