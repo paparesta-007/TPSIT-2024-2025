@@ -12,28 +12,27 @@ window.onload = function () {
     window.close();
   });
 
-  for (const opt of _optsGender) {
-    opt.addEventListener("change", function () {
-      let gender = this.value;
-      console.log(gender);
-    });
-  }
-  let xml = localStorage.getItem("orologi_xml");
-  if (!xml) {
-    xml = orologi;
-    console.log("Successfully loaded orologi");
-  } else {
-    console.log("Error getting orologi");
-  }
-  const parser = new DOMParser();
-  let xmlDoc = parser.parseFromString(xml, "text/xml");
-  let xmlRoot = xmlDoc.firstElementChild;
-
-  let codeNode = _txtCode.textContent;
-  let priceNode = _txtPrice.textContent;
-  let colorNode = _lstColor.textContent;
   _btnSalva.addEventListener("click",function() {
-    console.log(codeNode,priceNode);
+    if(_txtCode.value!="" && _txtPrice.value!=""){
+        let xml = localStorage.getItem("orologi_xml");
+        if (!xml) {
+          xml = orologi;
+          console.log("Successfully loaded orologi");
+        }
+        const parser = new DOMParser();
+        let xmlDoc = parser.parseFromString(xml, "text/xml");
+        let xmlRoot = xmlDoc.firstElementChild;
+
+        let gender=document.querySelector("input[type=radio]:checked").value;
+        console.log(gender)
+        xmlRoot.querySelector("catalog_item[gender="+gender+"]")
+    
+    }
+    else{
+        alert("Inserisci tutti i")
+    }
+   
+  
   })
   
 };

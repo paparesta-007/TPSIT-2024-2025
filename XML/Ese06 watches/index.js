@@ -55,34 +55,41 @@ window.onload = function () {
             let price = model.querySelector("price").textContent;
             let watches = model.querySelector("watches");
 
-            for(const colorWatch of watches.children) {
-              let color = watches.querySelector("color").textContent;
-              let image = watches.querySelector("color").getAttribute("image");
-
-              let tr=document.createElement("tr");
+            for (const colorWatch of watches.children) {
+              let color = colorWatch.textContent; 
+              let image = colorWatch.getAttribute("image");  
+          
+              let tr = document.createElement("tr");
               tbody.appendChild(tr);
-              let td=document.createElement("td");
-              td.textContent=gender;
+          
+              let td = document.createElement("td");
+              td.style.textAlign = "center";
+              td.textContent = gender;
               tr.appendChild(td);
-
-              td=document.createElement("td");
-              td.textContent=code;
+          
+              td = document.createElement("td");
+              td.textContent = code;
+              td.style.textAlign = "center";
               tr.appendChild(td);
-
-              td=document.createElement("td");
-              td.textContent=price;
+          
+              td = document.createElement("td");
+              td.textContent = price;
+              td.style.textAlign = "center";
               tr.appendChild(td);
-
-              td=document.createElement("td");
-              td.textContent=color;
+          
+              td = document.createElement("td");
+              td.textContent = color;  // Mostriamo il valore del colore corretto
+              td.style.textAlign = "center";
               tr.appendChild(td);
-
-              td=document.createElement("td");
-              let img=document.createElement("img");
-              img.src="img/"+image;
+          
+              td = document.createElement("td");
+              let img = document.createElement("img");
+              img.src = "img/" + image;  // Ora viene mostrata l'immagine corretta
+              td.style.textAlign = "center";
               td.appendChild(img);
               tr.appendChild(td);
-            }
+          }
+          
         }
       }
 
