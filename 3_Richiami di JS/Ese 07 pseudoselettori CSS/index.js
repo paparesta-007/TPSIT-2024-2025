@@ -5,8 +5,8 @@ window.onload = function() {
 	let txtRis = document.querySelector("#txtRis");
 
 	let vet = Array.from(document.querySelectorAll("#wrapper div, #wrapper p"))
-	vet.forEach(function(item){
-		item.addEventListener("click", elabora)
+	vet.forEach(function(item){ // Foreach solo sui vettori.
+		item.addEventListener("click", elabora)// Item è un oggeto del vettore
 	})
 
 
@@ -18,7 +18,7 @@ window.onload = function() {
 		let nBoxes = this.parentElement.children.length
 		for (let i = 1; i <= nBoxes; i++){
 			// 1 - i-esimo elemento generico 
-			if (this.matches(`:nth-child(${i})`))
+			if (this.matches(`:nth-child(${i})`)) // Matchese vede se this soddisfa la condizione che sia nth-child{i}
 				visualizza(`nth-child(${i})`);
 			// 2 - i-esimo elemento generico, ma solo se di tipo DIV		
 			if (this.matches(`div:nth-child(${i})`))
