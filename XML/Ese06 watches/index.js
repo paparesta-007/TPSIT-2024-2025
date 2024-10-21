@@ -1,92 +1,107 @@
 "use strict";
-let headers = ["Gender", "Code", "Price", "Color", "Image"]
+let headers = ["Gender", "Code", "Price", "Color", "Image"];
 
-window.onload=function () {
-	let thead = document.querySelector("table thead")
-	let tbody = document.querySelector("table tbody")
-	let lstGender = document.querySelector(".gender select")
-	let btnInserisci = document.getElementsByTagName("button")[0]
+window.onload = function () {
+  let thead = document.querySelector("table thead");
+  let tbody = document.querySelector("table tbody");
+  let lstGender = document.querySelector(".gender select");
+  let btnInserisci = document.getElementsByTagName("button")[0];
 
-	let xml = localStorage.getItem("watches_xml");
-	if(!xml)
-	{
-		xml = orologi;
-	}
-	const parser = new DOMParser();
-	const xmlDOC = parser.parseFromString(xml, "text/xml");
-	const xmlRoot = xmlDOC.firstElementChild;
+  let xml = localStorage.getItem("watches_xml");
+  if (!xml) {
+    xml = orologi;
+  }
+  const parser = new DOMParser();
+  const xmlDOC = parser.parseFromString(xml, "text/xml");
+  const xmlRoot = xmlDOC.firstElementChild;
 
-	createHeaders();
-	loadTable("");
+  let gender="";
 
-	lstGender.addEventListener("change", function(){
-		loadTable(lstGender.value);
-	})
+  lstGender.addEventListener("change", function () {
+    gender = this.value; //Default = ""
+     loadTable();
+    console.log(gender);
+  });
 
-	btnInserisci.addEventListener("click", function(){
-		window.location.href = "./inserisci.html";
-	});
+  loadTable()
+  btnInserisci.addEventListener("click",function () {
+    window.location.href="inserisci.html";
+  })
 
-	function createHeaders(){
-		const tr = document.createElement("tr");
-		thead.appendChild(tr);
+  function createHeaders() {
+    thead.innerHTML = ""; // Cancella gli eventuali headers precedenti
+    let tr = document.createElement("tr");
+    for (let header of headers) {
+      let th = document.createElement("th");
+      th.textContent = header;
+      tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+  }
 
-		for (const header of headers) {
-			const th = document.createElement("th");
-			tr.appendChild(th);
-			th.textContent = header;
-		}
-	}
+  function loadTable() {
+    tbody.innerHTML = ""; // Cancella gli eventuali righe precedenti
+    // thead.innerHTML = ""; // Cancella gli eventuali thead
 
-	function loadTable(selectedGender){
-		tbody.innerHTML = "";
+    createHeaders();
+    const catalogItem=xmlRoot.querySelectorAll("catalog_item");
+    
+    for(const item of catalogItem){
+      let genereOrologio=item.getAttribute("gender");
+      if(gender==genereOrologio || gender==""){
+      const models=item.children;
+      
+      for (const model of models) {
+        let code=model.querySelector("code").textContent;
+        let prezzo=model.querySelector("price").textContent;
+        let watches=model.querySelector("watches");
+        let colors=watches.children;
+        
+        for(const color of colors){
+          const tr=document.createElement("tr");
+          tr.style.textAlign="center"
+          tbody.appendChild(tr);
 
-		let watchesList = xmlRoot.querySelectorAll("catalog_item");
+          let td=document.createElement("td");
+          tr.appendChild(td);
+          // td.style.textAlign="center";
+          td.textContent=genereOrologio;
 
-		for (const item of watchesList) {
-			let gender = item.getAttribute("gender");
+          td=document.createElement("td");
+          tr.appendChild(td);
+          // td.style.textAlign="center";
 
-			if(selectedGender == "" || gender == selectedGender)
-			{
-				//let models = item.querySelectorAll("model");
-				let models = item.children;
-				for (const model of models) {
-					let code = model.querySelector("code").textContent;
-					let price = model.querySelector("price").textContent;
-					let watches = model.querySelector("watches");
+          td.textContent=code;
 
-					for (const colorWatch of watches.children) {
-						let color = colorWatch.textContent;
-						let image = colorWatch.getAttribute("image");
+          td=document.createElement("td");
+          tr.appendChild(td);
+          // td.style.textAlign="center";
 
-						let tr = document.createElement("tr");
-						tbody.appendChild(tr);
+          td.textContent=prezzo;
 
-						let td = document.createElement("td");
-						tr.appendChild(td);
-						td.textContent = gender;
+          td=document.createElement("td");
+          tr.appendChild(td);
+          // td.style.textAlign="center";
 
-						td = document.createElement("td");
-						tr.appendChild(td);
-						td.textContent = code;
+          td.textContent=color.textContent
 
-						td = document.createElement("td");
-						tr.appendChild(td);
-						td.textContent = price;
+          td=document.createElement("td");
+          td.style.textAlign="center";
 
-						td = document.createElement("td");
-						tr.appendChild(td);
-						td.textContent = color;
+          let img=document.createElement("img");
+          img.src=`./img/${color.textContent.toLowerCase()}_cardigan.jpg`;
+          // img.style.backgroundSize="cover";
+          
+          td.appendChild(img);
+          tr.appendChild(td);
 
-						td = document.createElement("td");
-						tr.appendChild(td);
-						const img = document.createElement("img");
-						img.src = "./img/" + image;
-						td.appendChild(img);
-					}
-				}	
-			}
-		}
 
-	}
-}
+        }
+      }
+    }
+      
+      
+    }
+  }
+
+};

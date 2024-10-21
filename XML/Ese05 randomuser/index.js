@@ -12,6 +12,7 @@ window.onload = function () {
 	const details = document.getElementById("details")
 	const nPag = document.getElementById("nPagina");
 	let gender="male";
+	details.style.display="none";
 
 	const primo=btns[0]
 	const indietro = btns[1]
@@ -92,6 +93,7 @@ window.onload = function () {
 				td.style.backgroundRepeat = "no-repeat";
 				td.style.backgroundOrigin = "content-box";
 				td.addEventListener("click", function () {
+					details.style.display = "block";
 					details.innerHTML = "";  
 					let emailNode = persona.querySelector("email"); 
 					let email = document.createElement("p");
@@ -133,8 +135,8 @@ window.onload = function () {
 				td.style.width = "20px";
 				td.style.height = "20px";
 				td.addEventListener("click", function(){
-					
-                    
+					let persona=this.parentElement
+					persona.remove();
 				})
 				td.style.backgroundRepeat = "no-repeat";
 				td.style.backgroundOrigin = "content-box";
@@ -144,6 +146,7 @@ window.onload = function () {
 
 		nPag.textContent = `${currentPage + 1}/${Math.ceil(root.length / recordsPerPage)}`; 
 	}
+
 
 	function readPerson(persona) {
 		nome = "";
