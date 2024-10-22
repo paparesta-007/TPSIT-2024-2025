@@ -21,7 +21,7 @@ window.onload = function () {
       if (i % 2 === 1) {
         item.style.backgroundColor = `rgb(0, ${50 * (i + 1)}, 0)`;
       }
-      i++;
+        i++;
     }
   });
 };
