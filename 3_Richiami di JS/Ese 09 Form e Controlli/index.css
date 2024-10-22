@@ -1,6 +1,15 @@
+body{
+	background-color: rgb(120, 113, 230);
+	
+}
+*{
+	background-color: rgb(120, 113, 230) ;
+}
 p {
 	padding:0; 
-	margin:2px 
+	margin:15px;
+	height: 30px;
+	/* border: 1px solid black; */
 } 
 
 h1{
@@ -9,6 +18,7 @@ h1{
 
 body  fieldset{
 	border-radius:10px;
+	border-color: rgb(120, 113, 230);
 }
 
 body > fieldset{
@@ -17,7 +27,10 @@ body > fieldset{
 	padding: 20px;
 	border: 1px solid black;			
 }
-		
+input{
+	border:  1px solid rgb(91, 85, 175) !important;
+	border-radius: 5px;
+}
 select:last-of-type{
 	vertical-align:top;
 }
@@ -28,4 +41,19 @@ div{
 	background-color:#FF4;	
 	font-weight:bold;	
 	font-style:italic;			
+}
+a{
+	background-color:rgb(153, 149, 202);
+	color:rgb(91, 85, 175) ;
+	border: 2px solid rgb(91, 85, 175);
+	border-bottom: 4px solid rgb(91, 85, 175);
+	/* height: 20px; */
+	text-decoration: none;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 2px;
+}
+a:active{
+	border: 2px solid rgb(91, 85, 175);
+	/* border: ; */
 }
