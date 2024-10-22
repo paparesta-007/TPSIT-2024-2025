@@ -53,7 +53,10 @@ a{
 	padding: 10px;
 	margin: 2px;
 }
+
 a:active{
-	border: 2px solid rgb(91, 85, 175);
+    border: 2px solid rgb(91, 85, 175);
+	/* border-bottom: 1px solid rgb(91, 85, 175); */
 	/* border: ; */
+
 }
