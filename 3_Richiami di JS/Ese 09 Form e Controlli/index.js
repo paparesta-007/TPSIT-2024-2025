@@ -3,6 +3,15 @@ let form1;
 
 window.onload = function () {
 	form1 = document.getElementById("form1")
+	let biblioteca=[
+		{"name": "porcodio"},
+		{"data":"12/04/2024"},
+		{"prezzo": 15.99},
+		
+
+	]
+	biblioteca[3].name="papa";
+
 }
 
 // richiamato dall'html
@@ -61,10 +70,54 @@ function visualizza(index) {
 }
 
 
-function imposta(index) {
-	let items
-	switch (index) {
+function imposta(index){
+	switch(index){
+		case 1:
+			let text = prompt("Inserisci il contenuto del text box: ");
+			form1.querySelector("input[type=text]").value = text;
+			break;
+		case 2:
+			let valLst1 = prompt("Inserisci il valore del select: ");
+			const lst1 = form1.querySelector("select");
 
-	}
+			for (const opt of lst1.children) {
+				if(opt.textContent == valLst1.toLowerCase() || opt.value == valLst1.toLowerCase())
+					opt.selected = true;
+				else
+					opt.selected = false;
+			}
+			break;
+		case 3:
+			let valChk = prompt("Inserisci il valore del checkbox: ");
+			const chks = form1.querySelectorAll("input[type=checkbox]");
+
+			for (const chk of chks) {
+				let s = chk.parentElement.textContent.trim();
+
+				if(s == valChk.toLowerCase() || chk.value == valChk.toLowerCase())
+					chk.checked = true;
+			}
+			break;
+		case 4:
+			let valOpt = prompt("Inserisci il valore del checkbox: ");
+			const opts = form1.querySelectorAll("input[type=radio]");
+
+			for (const opt of opts) {
+				if(opt.value == valOpt.toLowerCase())
+					opt.checked = true;
+			}
+			break;
+		case 5:
+			let valLst2 = prompt("Inserisci il valore del select multiple: ");
+			const lst2 = form1.querySelector("select[multiple]");
+
+			for (const opt of lst2.children) {
+				if(opt.textContent == valLst2.toLowerCase() || opt.value == valLst2.toLowerCase())
+					opt.selected = true;
+
+			}
+			break;
+	}	 
+	
 }
 
