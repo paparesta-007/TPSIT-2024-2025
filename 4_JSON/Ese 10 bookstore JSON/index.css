@@ -1,8 +1,15 @@
 body{
 	background-color: #fef3c7;
 	font-family: Arial, Helvetica, sans-serif;
+
+}
+*{
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-weight:500;
+	font-size:18px;
 }
 h1{
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	text-align:center;
 }
 
@@ -42,6 +49,8 @@ header{
 }
 
 table{
+	border: none;
+	/* padding: 5px; */
 	border-radius: 5px;
 	width:70%;
 	margin:0 auto;
@@ -69,10 +78,18 @@ table td, table th{
 
 
 table tr:hover td {
-    background-color: #fed7aa;
+    background-color: #fed7aa;	
 }
 
 
+/* view btn center page */
+#viewBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 100%; /* Imposta questa larghezza per centrare perfettamente */
+}
 
 
 table th{
@@ -164,7 +181,7 @@ input:hover, input:focus,input:active{
  
 .buttons {
     margin: 10px auto;
-    width: 460px;
+    width: 490px;
     text-align:center;
 }
 

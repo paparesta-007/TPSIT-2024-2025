@@ -4,7 +4,7 @@ window.onload = function () {
   let currentBookIndex = 0;
 
   let id, category, title, year, price, lang, authors;
-    // localStorage.clear()
+    localStorage.clear()
   let views = [];
   const listView = document.getElementById("list-view");
   const divNbooks = document.querySelector(".nBooks");
@@ -23,6 +23,7 @@ window.onload = function () {
   const newDetailBtn = addView.querySelector(".buttons");
   views.push(addView);
 
+  const viewBtn=document.getElementById("viewBtn");
   let headerBtns = document.getElementsByClassName("headerBtn");
   headerBtns[0].classList.add("active");
   headerBtns = Array.from(headerBtns);
@@ -36,7 +37,7 @@ window.onload = function () {
   const btnEliminaCategoria = document.createElement("button");
   btnEliminaCategoria.classList.add("btnVista");
   btnEliminaCategoria.textContent = "Elimina Categoria";
-  listView.appendChild(btnEliminaCategoria);
+  viewBtn.appendChild(btnEliminaCategoria);
   btnEliminaCategoria.addEventListener("click", function () {
     let v = prompt("Inserisci categoria");
     //ciclo for
@@ -48,7 +49,7 @@ window.onload = function () {
         i--;
       }
     }
-    alert("Eliminati: "+contElimina );
+    alert(`"Eliminazione della categoria ${v} (${contElimina} eliminati) `);
     localStorage.setItem("bookstore_json", JSON.stringify(objPeople));
     refreshNavBar(0);
   });
@@ -57,7 +58,7 @@ window.onload = function () {
   const btnSort = document.createElement("button");
   btnSort.classList.add("btnVista");
   btnSort.textContent = "Ordina per titolo";
-  listView.appendChild(btnSort);
+  viewBtn.appendChild(btnSort);
   btnSort.addEventListener("click", function() {
 	  
 	  objPeople.sort(function(a, b) {
