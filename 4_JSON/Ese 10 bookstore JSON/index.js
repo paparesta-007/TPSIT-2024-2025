@@ -4,7 +4,7 @@ window.onload = function () {
   let currentBookIndex = 0;
 
   let id, category, title, year, price, lang, authors;
-    localStorage.clear()
+    // localStorage.clear()
   let views = [];
   const listView = document.getElementById("list-view");
   const divNbooks = document.querySelector(".nBooks");
@@ -34,6 +34,7 @@ window.onload = function () {
 
   // ----------BTN ELIMINA CATEGORIA----------
   const btnEliminaCategoria = document.createElement("button");
+  btnEliminaCategoria.classList.add("btnVista");
   btnEliminaCategoria.textContent = "Elimina Categoria";
   listView.appendChild(btnEliminaCategoria);
   btnEliminaCategoria.addEventListener("click", function () {
@@ -54,6 +55,7 @@ window.onload = function () {
 
   // ----------BTN ORDINA PER TITOLO----------
   const btnSort = document.createElement("button");
+  btnSort.classList.add("btnVista");
   btnSort.textContent = "Ordina per titolo";
   listView.appendChild(btnSort);
   btnSort.addEventListener("click", function() {
@@ -111,38 +113,55 @@ window.onload = function () {
 
       let td = document.createElement("td");
       tr.appendChild(td);
+      
       td.textContent = objPeople[i].id;
 
       td = document.createElement("td");
       tr.appendChild(td);
+      td.addEventListener("click", function(){
+        //cerca su google testo del td
+        window.open("https://www.google.com/search?q="+objPeople[i].title);
+      })
+      td.style.cursor = "pointer";
       td.textContent = objPeople[i].title;
 
       td = document.createElement("td");
       tr.appendChild(td);
+      td.addEventListener("click", function(){
+        //cerca su google testo del td
+        window.open("https://www.google.com/search?q="+objPeople[i].category);
+      })
+      td.style.cursor = "pointer";
       td.textContent = objPeople[i].category;
 
       td = document.createElement("td");
       tr.appendChild(td);
+    
       td.textContent = objPeople[i].lang;
 
       td = document.createElement("td");
       tr.appendChild(td);
+      td.addEventListener("click", function(){
+        //cerca su google testo del td
+        window.open("https://www.google.com/search?q="+objPeople[i].authors);
+      })
+      td.style.cursor = "pointer";
       let autori = objPeople[i].authors;
       td.textContent = autori.join(", ");
 
       td = document.createElement("td");
       tr.appendChild(td);
+      
       td.textContent = objPeople[i].year;
 
       td = document.createElement("td");
       tr.appendChild(td);
-      td.textContent = objPeople[i].price;
+      td.textContent = "€ "+objPeople[i].price;
 
       td = document.createElement("td");
       tr.appendChild(td);
       const btnDelete = document.createElement("button");
       btnDelete.textContent = "Delete";
-      btnDelete.style.backgroundColor = "#BABABA";
       td.appendChild(btnDelete);
       btnDelete.addEventListener("click", function () {
         console.log("eliminato");
