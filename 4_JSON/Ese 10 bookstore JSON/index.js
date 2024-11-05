@@ -108,6 +108,7 @@ window.onload = function () {
 
   function loadTable() {
     tBody.innerHTML = "";
+    divNbooks.textContent = "Numero di libri: " + objPeople.length;
     for (let i = 0; i < objPeople.length; i++) {
       let tr = document.createElement("tr");
       tBody.appendChild(tr);
