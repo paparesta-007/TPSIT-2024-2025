@@ -128,14 +128,7 @@ window.onload = function () {
 
      if (selectedScuderia ) {
       let team = objFormula[selectedScuderia]; // Ottieni il team selezionato
-     }
-     else if(selectedCheckbox){
-      let team = objFormula[selectedCheckbox]; // Ottieni il team selezionato
-     }
-     else{
-       console.log("Nessuna scuderia selezionata");
-       return;
-     }
+
       for (const pilota of team.piloti) {
         let tr = document.createElement("tr"); 
 
@@ -164,6 +157,38 @@ window.onload = function () {
         table.appendChild(tr);
       }
     }
+    else //load all
+    {
+      for (let scuderia in objFormula) {
+        let team = objFormula[scuderia]; 
+        for (const pilota of team.piloti) {
+          let tr = document.createElement("tr"); 
   
+          let tdNum = document.createElement("td");
+          tdNum.textContent = pilota.numero; 
+          tr.appendChild(tdNum);
   
+          let tdNome = document.createElement("td");
+          let span = document.createElement("span");
+          span.textContent = pilota.nome;
+          span.addEventListener("click", function(){
+            // Qui puoi caricare i dettagli del pilota se necessario
+            console.log(`Dettagli per ${pilota.nome}`);
+          });
+          tdNome.appendChild(span);
+          tr.appendChild(tdNome);
+  
+          let tdNazione = document.createElement("td");
+          tdNazione.textContent = pilota.nazione; 
+          tr.appendChild(tdNazione);
+  
+          let tdScuderia = document.createElement("td");
+          tdScuderia.textContent = scuderia; 
+          tr.appendChild(tdScuderia);
+  
+          table.appendChild(tr);
+      }
+    }
+    }
+  }
 };
