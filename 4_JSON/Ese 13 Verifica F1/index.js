@@ -10,38 +10,25 @@ window.onload = function () {
   const divDettagli = document.getElementById("divDettagli");
   let json = localStorage.getItem("./DB/f1_json");
   let table = document.getElementsByTagName("table")[0];
-
+  const btnTutti=document.getElementsByTagName("button") [0];
+  btnTutti.addEventListener("click",function () {
+    selectedCheckbox="";
+    selectedScuderia="";
+    loadPilot();
+  })
   let selectedScuderia = "";
-  let selectedCheckbox="selected"
+  let selectedCheckbox = ""; // memorizza la nazione selezionata
   if (!json) {
     json = database;
   }
 
   let objFormula = JSON.parse(json);
   console.log(objFormula);
-  /* "Mercedes-AMG Petronas Formula One Team": {
-    "pneumatici": "Pirelli",
-    "motore": "Mercedes",
-    "piloti": [
-      {
-        "nome": "Lewis Hamilton",
-        "numero": 44,
-        "nazione": "Regno Unito",
-        "data_di_nascita": "7 gennaio 1985",
-		"img":".jpg"
-      },
-      {
-        "nome": "Valtteri Bottas",
-        "numero": 77,
-        "nazione": "Finlandia",
-        "data_di_nascita": "28 agosto 1989",
-		"img":".jpg"
-      }
-    ]
-  }, */
+
   loadSelect();
-  caricaNazioni(); //No ripetizioni
+  caricaNazioni(); // Evita ripetizioni
   loadPilot();
+
   function caricaNazioni() {
     for (let scuderia in objFormula) {
       let team = objFormula[scuderia];
@@ -54,7 +41,7 @@ window.onload = function () {
         }
       });
     }
-    nazioni.sort(); // ordina in ordine alfabetico
+    nazioni.sort(); // Ordina in ordine alfabetico
     for (const nation of nazioni) {
       let input = document.createElement("input");
       input.type = "checkbox";
@@ -62,41 +49,38 @@ window.onload = function () {
       input.name = "naz";
 
       let label = document.createElement("label");
-      // label.for="naz"
       label.textContent = nation;
 
       divNazioni.appendChild(input);
       divNazioni.appendChild(label);
-      //add br
       divNazioni.appendChild(document.createElement("br"));
-      //click
+
+      // Evento click sul checkbox
       input.addEventListener("click", function () {
-        let checked = this.checked;
-        if (checked) {
-          for (let i = 0; i < divNazioni.children.length; i++) {
+        selectedCheckbox = this.checked ? this.value : "";
+        
+        // Deseleziona tutti gli altri checkbox
+        for (let i = 0; i < divNazioni.children.length; i++) {
+          if (divNazioni.children[i].type === "checkbox" && divNazioni.children[i] !== this) {
             divNazioni.children[i].checked = false;
           }
-          this.checked = true;
         }
-        selectedCheckbox=this.value
-        console.log(selectedCheckbox)
-        lstScuderie.selectedIndex=0;
+        
+        lstScuderie.selectedIndex = 0; // Resetta la selezione delle scuderie
+        loadPilot(); // Aggiorna la tabella in base al filtro
       });
-      
     }
- 
   }
 
   function loadSelect() {
     const sortedScuderie = Object.keys(objFormula).sort();
-    //selected index -1
-
-    let opt=document.createElement("option");
+    let opt = document.createElement("option");
     opt.value = "";
     opt.innerHTML = "Tutte";
     lstScuderie.appendChild(opt);
-    sortedScuderie.forEach((scuderia) => {
-       opt = document.createElement("option");
+
+    sortedScuderie.forEach(function(scuderia)  {
+      opt = document.createElement("option");
       opt.value = scuderia;
       opt.innerHTML = scuderia;
       lstScuderie.appendChild(opt);
@@ -104,19 +88,22 @@ window.onload = function () {
 
     lstScuderie.addEventListener("change", function () {
       selectedScuderia = this.value;
-      //deselect all checkboxes
-      for (let i = 0; i < divNazioni.children.length; i++) {
-        divNazioni.children[i].checked = false;
-      }
       
-      console.log(selectedScuderia);
+      // Deseleziona tutti i checkbox quando una scuderia è selezionata
+      for (let i = 0; i < divNazioni.children.length; i++) {
+        if (divNazioni.children[i].type === "checkbox") {
+          divNazioni.children[i].checked = false;
+        }
+      }
+
+      selectedCheckbox = ""; // Resetta la selezione della nazione
       loadPilot();
     });
   }
 
   function loadPilot() {
     table.innerHTML = "";
-    // Carica l'intestazione della tabella
+
     let trHeader = document.createElement("tr");
     headers.forEach((header, index) => {
       let th = document.createElement("th");
@@ -126,69 +113,86 @@ window.onload = function () {
     });
     table.appendChild(trHeader);
 
-     if (selectedScuderia ) {
-      let team = objFormula[selectedScuderia]; // Ottieni il team selezionato
-
+    for (let scuderia in objFormula) {
+      let team = objFormula[scuderia];
       for (const pilota of team.piloti) {
-        let tr = document.createElement("tr"); 
+
+        if (
+          (selectedScuderia && selectedScuderia !== scuderia) || 
+          (selectedCheckbox && pilota.nazione !== selectedCheckbox)
+        ) {
+          continue;
+        }
+
+        let tr = document.createElement("tr");
 
         let tdNum = document.createElement("td");
-        tdNum.textContent = pilota.numero; 
+        tdNum.textContent = pilota.numero;
         tr.appendChild(tdNum);
 
         let tdNome = document.createElement("td");
         let span = document.createElement("span");
         span.textContent = pilota.nome;
-        span.addEventListener("click", function(){
-          // Qui puoi caricare i dettagli del pilota se necessario
-          console.log(`Dettagli per ${pilota.nome}`);
+        span.addEventListener("click", function () {
+          divDettagli.innerHTML = "";
+          divDettagli.style.display = "flex";
+          let img=document.createElement("img");
+          //float left
+          // img.style.float="left";
+          img.src=`./img/${pilota.nome}.jpg`;
+          img.addEventListener("error", function(){
+            img.src="./img/user.png";
+          })
+          divDettagli.appendChild(img);
+
+         let divDettagliRight=document.createElement("div");
+          divDettagli.appendChild(divDettagliRight);
+          // divDettagliRight.style.float="right";
+          let p = document.createElement("p");
+          divDettagliRight.appendChild(p);
+          let b= document.createElement("b");
+          b.textContent = `${pilota.numero} - ${pilota.nome}`;
+
+
+          p.appendChild(b);
+          let pScuderia=document.createElement("p");
+          pScuderia.textContent = `${scuderia}`;
+          divDettagliRight.appendChild(pScuderia)
+          let pMotore=document.createElement("p");
+
+          pMotore.textContent="Motore: ";
+          divDettagliRight.appendChild(pMotore)
+          b=document.createElement("b");
+          b.textContent = team.motore;
+          pMotore.appendChild(b);
+          let pPneumatici=document.createElement("p");
+          pPneumatici.textContent="Pneumatici: ";
+          divDettagliRight.appendChild(pPneumatici)
+          b=document.createElement("b");
+          b.textContent = team.pneumatici;
+          pPneumatici.appendChild(b);
+          
+          let pNascita=document.createElement("p");
+          pNascita.textContent="Data di nascita: ";
+          divDettagliRight.appendChild(pNascita)
+          b=document.createElement("b");
+          b.textContent = pilota.data_di_nascita;
+          pNascita.appendChild(b);
         });
         tdNome.appendChild(span);
         tr.appendChild(tdNome);
 
         let tdNazione = document.createElement("td");
-        tdNazione.textContent = pilota.nazione; 
+        tdNazione.textContent = pilota.nazione;
         tr.appendChild(tdNazione);
 
         let tdScuderia = document.createElement("td");
-        tdScuderia.textContent = selectedScuderia; 
+        tdScuderia.textContent = scuderia;
         tr.appendChild(tdScuderia);
 
         table.appendChild(tr);
       }
     }
-    else //load all
-    {
-      for (let scuderia in objFormula) {
-        let team = objFormula[scuderia]; 
-        for (const pilota of team.piloti) {
-          let tr = document.createElement("tr"); 
-  
-          let tdNum = document.createElement("td");
-          tdNum.textContent = pilota.numero; 
-          tr.appendChild(tdNum);
-  
-          let tdNome = document.createElement("td");
-          let span = document.createElement("span");
-          span.textContent = pilota.nome;
-          span.addEventListener("click", function(){
-            // Qui puoi caricare i dettagli del pilota se necessario
-            console.log(`Dettagli per ${pilota.nome}`);
-          });
-          tdNome.appendChild(span);
-          tr.appendChild(tdNome);
-  
-          let tdNazione = document.createElement("td");
-          tdNazione.textContent = pilota.nazione; 
-          tr.appendChild(tdNazione);
-  
-          let tdScuderia = document.createElement("td");
-          tdScuderia.textContent = scuderia; 
-          tr.appendChild(tdScuderia);
-  
-          table.appendChild(tr);
-      }
-    }
-    }
   }
+
 };
