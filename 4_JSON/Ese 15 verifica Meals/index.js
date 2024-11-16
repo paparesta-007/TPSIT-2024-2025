@@ -8,9 +8,11 @@ window.onload=function()
 {
 	const radioWrapper=document.getElementById("radioWrapper");
     const table=document.getElementsByTagName("table")[0];
+    let dettagliWrapper=document.getElementById("dettagliWrapper");
+    dettagliWrapper.style.display="none"
 
     loadCategories();
-    loadHeaders();
+    // loadHeaders();
     loadMeals(radioWrapper.querySelector("input:checked").value);
 
     function loadHeaders(){
@@ -30,6 +32,8 @@ window.onload=function()
     }
     
     function loadMeals(category){
+        table.innerHTML = "";
+        loadHeaders();
         for(const item of details.meals){
             const meal=item.meals[0];
             
@@ -48,6 +52,10 @@ window.onload=function()
                 td=document.createElement("td");
                 tr.appendChild(td);
                 let img=document.createElement("img");
+                img.addEventListener("click",function(){
+                    //ope yt link strYoutube
+                    window.open(meal.strYoutube);
+                })
                 img.src=meal.strMealThumb;
                 td.appendChild(img);
                 img.style.width="55px"
@@ -75,6 +83,35 @@ window.onload=function()
         }
             
     }
+    function deleteMeal(mealToDelete) {
+        // Iterate through the details.meals array
+        for (let i = 0; i < details.meals.length; i++) {
+            const currentMeal = details.meals[i].meals[0]; // Access the meal object
+            if (currentMeal.idMeal === mealToDelete.idMeal) {
+                // Remove the meal from the array
+                details.meals.splice(i, 1);
+                break; 
+            }
+        }
+        dettagliWrapper.innerHTML ="";
+        dettagliWrapper.style.display = "none"
+
+    
+        // Reload the meals for the current selected category
+        const selectedCategory = radioWrapper.querySelector("input:checked").value;
+        loadMeals(selectedCategory);
+    }
+    
+    function viewDetails(meal){
+        dettagliWrapper.innerHTML="";
+        dettagliWrapper.style.display="block";
+        let title=document.createElement("span");
+        title.innerHTML="<b>"+meal.strMeal +"</b>: ";
+        dettagliWrapper.appendChild(title);
+        const span=document.createElement("span");
+        span.textContent=meal.strInstructions
+        dettagliWrapper.appendChild(span);
+    }
 
     function loadCategories(){
         // let categories=Object.keys(categoryList);
@@ -94,8 +131,14 @@ window.onload=function()
             span.textContent=key;
             radioWrapper.appendChild(span);
             radioWrapper.innerHTML+="<br>"
+            
         }
         radioWrapper.querySelector("input").checked=true;
+        //change value of radio when clicked
+        radioWrapper.addEventListener("change",function(){
+            const selectedCategory = radioWrapper.querySelector("input:checked").value;
+            loadMeals(selectedCategory);
+        });
         
     }
 	
