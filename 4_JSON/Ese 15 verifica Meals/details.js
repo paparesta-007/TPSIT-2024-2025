@@ -52,7 +52,10 @@ let details = {
                 "strMeasure20": " ",
                 "strSource": "http://www.vodkaandbiscuits.com/2014/03/06/bangin-breakfast-potatoes/",
                 "dateModified": null
-            }]
+            }
+            
+       ],
+
         },
         {
             "meals": [{

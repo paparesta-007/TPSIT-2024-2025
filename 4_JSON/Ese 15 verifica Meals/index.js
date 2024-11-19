@@ -53,7 +53,7 @@ window.onload=function()
                 tr.appendChild(td);
                 let img=document.createElement("img");
                 img.addEventListener("click",function(){
-                    //ope yt link strYoutube
+                    
                     window.open(meal.strYoutube);
                 })
                 img.src=meal.strMealThumb;

@@ -1,3 +1,6 @@
+body{
+	background-color: #b7a97e;
+}
 .gender{
 	text-align:center;
 }
@@ -9,20 +12,25 @@
 
 table{
 	width : 1020px;
-	border : 1px solid black;
+	/* border : 1px solid black; */
+	border-radius: 10px;
 	margin : 20px auto;
 }
 
 table tr{
+	border-radius: 10px;
 	height:40px;
 }
 
 table tr th{
-	background-color:#ccc;
+	border-radius: 3px;
+	background-color:#636d51;
 }
 
 table tr td{
-	border:1px solid #ddd;
+	border-radius: 3px;
+	/* border:1px solid #ddd; */
+	background-color: #7a8255;
 }
 
 table tr td img{
@@ -34,4 +42,22 @@ table tr td img{
 	height:30px;
 	display:block;
 	margin : 16px auto;
+}
+img{
+	mix-blend-mode: multiply;
+}
+button{
+	display:inline-block;
+    border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	background-color: #7e6b51;
+	/* box shadow */
+	box-shadow: 0 0 10px 3px #7e6b519f;
+    transition: 0.2s ease-in-out;
+
+}
+button:hover{
+	background-color: #636d51;
+
 }
