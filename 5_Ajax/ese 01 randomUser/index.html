@@ -9,12 +9,71 @@
     <script src="./axios@1.1.2.min.js"></script>
     <script src="./libreria.js"></script>
     <script src="./index.js"></script>
+	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/bootstrap-icons.svg"></script>
 </head>
 
-<body>
+<body >
+	<nav class="block w-4/5 m-2  px-4 py-2 mx-auto text-white bg-slate-900 shadow-md rounded-md navBarHome" >
+		<div class="container flex flex-wrap items-center justify-between mx-auto text-gray-100">
+		  <a href="#"
+			class="float-left block cursor-pointer py-1.5 text-base text-gray-200 font-semibold">
+			randomUser
+		  </a>
+		  <div class="hidden lg:block">
+			<ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+					<img src="./img/homeIcon.png" style="width: 30px;"  class="mr-2" alt="">
+				 Home
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				
+				<a href="#" class="flex items-center">
+					<img src="./img/userIcon.png" style="width: 30px;" class="mr-2" alt="">
+				  <span class="text-[25px]">User Photos</span>
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+					<img src="./img/documentationIcon.png" style="width: 30px;" class="mr-2" alt="">
+				  Documentation
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+				  Change Log
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+				  Stats & Graphs
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+				  Donate
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+				  Copyright Notice
+				</a>
+			  </li>
+			  <li class="flex items-center p-1 text-sm gap-x-2 text-gray-200">
+				<a href="#" class="flex items-center">
+				  Photoshop Extension
+				</a>
+			  </li>
+			</ul>
+		  </div>
+		 
+		</div>
+	  </nav>
 	<h1>Random User</h1>
-	<button> Richiedi 20 persone di genere maschile </button>
-	<table>	
+	<button class="bg-blue-500 border-none outline-none rounded-md p-2 m-2 hover:bg-blue-400 transition-all duration-200"> Richiedi 20 persone di genere maschile </button>
+	<table class="bg-green-200 border-none">	
 		<thead>
 			<tr>
 				<th>Name</th>
