@@ -1,7 +1,21 @@
+    
+@tailwind base;
 
+@tailwind components;
+
+@tailwind utilities;
+body{
+	background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+	background-repeat: no-repeat;
+	height: 100vh;
+	/* background-color: black; */
+}
 h1{
 	margin: 20px;
 	padding: 10px;	
+}
+.navBarHome {
+	background-color: transparent; /* Colore più chiaro */
 }
 
 
@@ -22,9 +36,11 @@ table tr{
 table th{
 	text-align:left;
 	width:30%;
-	border: 1px solid #8F8F8F;
+	/* border: 1px solid #8F8F8F; */
 	border-radius:2px;
-	background-color:#999;	
+	/* background-color:#999;	 */
+	/* border: 1px solid black; */
+	/* border-radius: 2em; */
 }
 
 table th:last-of-type(){
