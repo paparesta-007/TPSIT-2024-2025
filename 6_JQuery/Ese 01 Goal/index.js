@@ -1,5 +1,5 @@
 "use strict"
-$(document).ready(function()
+window.onload = function()
 {	
 	let calciatore = $("#calciatore");
 	let palla = $("#palla");
@@ -10,11 +10,24 @@ $(document).ready(function()
 	let btnNascondiPalla = $("#btnNascondiPalla")
 	let btnTira = $("#btnTira")
 
+	calciatore.hide();
+	palla.hide();
+	
+    btnEsci.hide();
+	btnNascondiPalla.hide();
+	btnTira.hide();
+	
+	btnEntra.on("click", function(){
+		btnEntra.hide();
+		calciatore.show(2000,function(){
+			btnEsci.show();
+		});
+       
+	})
 	
 	
 	
-	
-});
+};
 
 
 
