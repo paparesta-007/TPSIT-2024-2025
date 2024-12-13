@@ -5,15 +5,6 @@ const GIALLO = "#FF0";
 const ROSSO = "#F00";
 let turno = GIALLO;
 
-// Initialize an empty board
-let board = [];
-for (let i = 0; i < RIGHE; i++) {
-  board[i] = [];
-  for (let j = 0; j < COLONNE; j++) {
-    board[i][j] = null; // null means the cell is empty
-  }
-}
-
 $(function () {
   let header = $("#header");
   let wrapper = $("#wrapper");
@@ -35,14 +26,12 @@ $(function () {
           },
           "mouseout": function () {
             div.css({
-              backgroundColor: "#BBB"
+              backgroundColor: ""
             });
           },
           "click": function () {
-            // Drop the piece in the clicked column
-            scendi(i);
-            // Toggle player turn
             turno = (turno == GIALLO) ? ROSSO : GIALLO;
+            scendi();
           }
         }
       });
@@ -50,8 +39,38 @@ $(function () {
   }
 
   // Function to simulate a piece falling down a column
-  function scendi(colonna) {
+  function scendi() {
+    let colonna = this.id.split("-")[1];
 
+    for (let riga = 0; riga < RIGHE; riga++) {
+      let id = `#div-${i}-${colonna}`;
+      let div = $("#" + id);
+      if (div[0].occupato) {
+        break;
+        
+      }
+
+    }
+    if(riga==0){
+        return;
+    }
+    let posIniziale={
+        "position":"absolute",
+        "top":5,
+        "left":colonna*60,
+        "backgroundColor":turno,
+    }
+    let posFinale={
+      "position":"absolute",
+      "top":60*riga,
+      "left":colonna*60,
+      "backgroundColor":turno,
+  }
+  $("<div>",{
+    "class":"pedina",
+    "css": posIniziale,
+    "appendTo":wrapper
+  })
   }
 
   // Function to create the grid of tokens (board layout)
@@ -61,7 +80,9 @@ $(function () {
         let div = $("<div>", {
           "class": "pedina",
           "appendTo": wrapper,
-          "id": i + "-" + j // Set the id as the column-row (e.g., 0-0, 0-1, etc.)
+          "prop": {
+            "id": i + "-" + j // Set the id as the column-row (e.g., 0-0, 0-1, etc.)
+          }
         });
       }
     }
