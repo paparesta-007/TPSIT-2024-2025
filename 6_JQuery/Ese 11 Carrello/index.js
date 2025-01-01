@@ -125,13 +125,11 @@ window.onload = function(){
                 "appendTo":divArticle,
                 "on": {
                     "mouseover": function () {
-                        // Seleziona il div .name associato a questa immagine
                         $(this).next() .css({
                             "opacity": 1
                         });
                     },
                     "mouseout": function () {
-                        // Seleziona il div .name associato a questa immagine
                         $(this).next().css({
                             "opacity": 0
                         });
