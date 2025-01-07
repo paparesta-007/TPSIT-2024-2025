@@ -1,0 +1,38 @@
+.rotateContainer{
+    border: 1px solid gray;
+    position: relative;
+    height: 150px;
+    width: 150px;
+}
+.rotate{
+    position: relative;
+    background-color: green !important;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+.contenitore{
+    display: block ;
+    width: 400px;
+    height: auto;
+
+    background-color: lightgray;
+    padding: 5px;
+}
+.liDinamicamente{
+    border: 1px solid gray !important;
+    width: 20%;
+    margin: 5px 0;
+     border-radius: 5px;
+     padding: 5px;
+}
+.contenitoreConFigli{
+    width: 250px;
+    height: 250px;
+    border: 1px solid gray;
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:start;
+    
+}
