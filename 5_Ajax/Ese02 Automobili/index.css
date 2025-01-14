@@ -36,3 +36,8 @@ table tbody tr td{
 	padding:5px;
 	margin-bottom:10px;
 }
+.details{
+	display: flex !important;
+	/* align-items: center ; */
+	align-content: center;
+}

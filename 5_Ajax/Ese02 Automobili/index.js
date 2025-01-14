@@ -12,7 +12,7 @@ $(document).ready(function () {
 	_table.style.display="none";
 	
 
-	getMarche()
+	let jsonMarche= getMarche()
 
 	function getMarche() {
 		let request=inviaRichiesta("GET","/marche")
@@ -29,9 +29,12 @@ $(document).ready(function () {
 			}
 			_lstMarche.selectedIndex=-1
 		})
+		return request
 	}
     _lstMarche.addEventListener("change",function () {
 		codModello=this.value
+		_table.style.display="none"
+		_dettagli.style.display="none" 
 		let request=inviaRichiesta("GET","/modelli",{"codMarca":codModello})
 		request.catch(errore);
 		request.then(function (response) {
@@ -66,9 +69,9 @@ $(document).ready(function () {
 			console.log(currentModel)
 			nomeModello=currentModel[0].nome
 		})
+		
+		
 		let request=inviaRichiesta("GET","/automobili",{"codModello":modelloId})
-
-			
 		request.catch(errore)
 		request.then(function (response) {
 			let automobili=response.data
@@ -108,12 +111,28 @@ $(document).ready(function () {
 				btnDettagli.classList.add("btn")
 				btnDettagli.style.backgroundColor="rgb(74, 180, 74)"
 				btnDettagli.style.color="white"
-				btnDettagli.addEventListener("click",function() {
-					_dettagli.style.display="block";
-					let idMarca=_lstMarche.selectedIndex+1;
-					let idModello=this.parentElement.parentElement.querySelector("td:first-child").textContent;
+				btnDettagli.addEventListener("click", function() {
+					_dettagli.style.display = "block";
+					let idMarca =automobile.id;
+					let nome = nomeModello;
+					let alimentazione = currentModel[0].alimentazione;
+					let cilindrata = currentModel[0].cilindrata;
+					let targa = automobile.targa;
+					let colore = automobile.colore;
+					let anno = automobile.anno;
+					let km = automobile.km;
 					
-				})
+					console.log(idMarca, nome, alimentazione, cilindrata, targa, colore, anno, km);
+					$("#txtId").val(idMarca);
+					$("#txtNome").val(nome);
+					$("#txtAlimentazione").val(alimentazione);
+					$("#txtCilindrata").val(cilindrata);
+					$("#txtTarga").val(targa);
+					$("#txtColore").val(colore);
+					$("#txtAnno").val(anno);
+					$("#txtKm").val(km);
+				});
+				
 				td.appendChild(btnDettagli)
 				tr.appendChild(td)
 
