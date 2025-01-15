@@ -10,7 +10,7 @@ $(document).ready(function () {
 	let nomeModelloSelected=""
 	_dettagli.style.display="none";
 	_table.style.display="none";
-	
+	_lstModelli.disabled="disabled";
 
 	let jsonMarche= getMarche()
 
@@ -32,9 +32,13 @@ $(document).ready(function () {
 		return request
 	}
     _lstMarche.addEventListener("change",function () {
+		_lstModelli.disabled = false
 		codModello=this.value
 		_table.style.display="none"
-		_dettagli.style.display="none" 
+		document.querySelector(".row:nth-of-type(3) > div:nth-of-type(2)").style.display="none"
+		caricaModelli()
+	})
+	function caricaModelli(){
 		let request=inviaRichiesta("GET","/modelli",{"codMarca":codModello})
 		request.catch(errore);
 		request.then(function (response) {
@@ -51,7 +55,7 @@ $(document).ready(function () {
 			}
 			_lstModelli.selectedIndex=-1
 		})
-	})
+	}
 	_lstModelli.addEventListener("change",function () {
 		_table.style.display="block";
 		let tbody=document.querySelector("tbody")
@@ -60,99 +64,119 @@ $(document).ready(function () {
 		tbody.innerHTML=""
 		let modelloId=this.value
 		console.log(modelloId)
-		let currentModel;
-		let nomeModello
-		let requestModello=inviaRichiesta("GET","/modelli",{"id":modelloId})
-		requestModello.catch(errore)
-		requestModello.then(function (response){
-			currentModel=response.data
-			console.log(currentModel)
-			nomeModello=currentModel[0].nome
-		})
-		
-		
-		let request=inviaRichiesta("GET","/automobili",{"codModello":modelloId})
-		request.catch(errore)
-		request.then(function (response) {
-			let automobili=response.data
-			console.log(automobili)
-			
-			for (const automobile of automobili) {
-				let tr=document.createElement("tr")
-				console.log(nomeModello)
-				let td=document.createElement("td")
-				td.innerHTML=nomeModello
-				tr.appendChild(td)
-
-				td=document.createElement("td")
-				td.textContent=currentModel[0].alimentazione	
-				tr.appendChild(td)
-
-				td=document.createElement("td")
-				td.textContent=automobile.colore
-				tr.appendChild(td)
-
-				td=document.createElement("td")
-				td.textContent=automobile.anno
-				tr.appendChild(td)
-
-				td=document.createElement("td")
-				let img=document.createElement("img")
-				img.src=`./img/${automobile.img}`
-				img.style.height="80px"
-
-				
-				td.appendChild(img)
-				tr.appendChild(td)
-
-				td=document.createElement("td")
-				let btnDettagli=document.createElement("button")
-				btnDettagli.textContent="Dettagli"
-				btnDettagli.classList.add("btn")
-				btnDettagli.style.backgroundColor="rgb(74, 180, 74)"
-				btnDettagli.style.color="white"
-				btnDettagli.addEventListener("click", function() {
-					_dettagli.style.display = "block";
-					let idMarca =automobile.id;
-					let nome = nomeModello;
-					let alimentazione = currentModel[0].alimentazione;
-					let cilindrata = currentModel[0].cilindrata;
-					let targa = automobile.targa;
-					let colore = automobile.colore;
-					let anno = automobile.anno;
-					let km = automobile.km;
-					
-					console.log(idMarca, nome, alimentazione, cilindrata, targa, colore, anno, km);
-					$("#txtId").val(idMarca);
-					$("#txtNome").val(nome);
-					$("#txtAlimentazione").val(alimentazione);
-					$("#txtCilindrata").val(cilindrata);
-					$("#txtTarga").val(targa);
-					$("#txtColore").val(colore);
-					$("#txtAnno").val(anno);
-					$("#txtKm").val(km);
-				});
-				
-				td.appendChild(btnDettagli)
-				tr.appendChild(td)
-
-
-				td=document.createElement("td")
-				let btnElimina=document.createElement("button")
-				btnElimina.textContent="Elimina"
-				btnElimina.classList.add("btn")
-				btnElimina.style.backgroundColor="rgb(255, 59, 48)"
-				btnElimina.style.color="white"
-				td.appendChild(btnElimina)
-				tr.appendChild(td)
-				tbody.appendChild(tr)
-
-
-
+		caircaAuto(modelloId)
+		function caircaAuto(modelloId) {
+			let currentModel;
+			let nomeModello =getModello()
+			function getModello() {
+				let requestModello=inviaRichiesta("GET","/modelli",{"id":modelloId})
+			requestModello.catch(errore)
+			requestModello.then(function (response){
+				currentModel=response.data
+				console.log(currentModel)
+				nomeModello=currentModel[0].nome
+			})
 			}
-		
-		})
-	})
+			
+			
+			let request=inviaRichiesta("GET","/automobili",{"codModello":modelloId})
+			request.catch(errore)
+			request.then(function (response) {
+				let automobili=response.data
+				console.log(automobili)
+				
+				for (const automobile of automobili) {
+					let tr=document.createElement("tr")
+					console.log(nomeModello)
+					let td=document.createElement("td")
+					td.innerHTML=nomeModello
+					tr.appendChild(td)
+	
+					td=document.createElement("td")
+					if(currentModel[0].alimentazione){
+						td.textContent=currentModel[0].alimentazione
+					}
+						
+					tr.appendChild(td)
+	
+					td=document.createElement("td")
+					td.textContent=automobile.colore
+					tr.appendChild(td)
+	
+					td=document.createElement("td")
+					td.textContent=automobile.anno
+					tr.appendChild(td)
+	
+					td=document.createElement("td")
+					let img=document.createElement("img")
+					img.src=`./img/${automobile.img}`
+					img.style.height="65px"
+	
+					
+					td.appendChild(img)
+					tr.appendChild(td)
+	
+					td=document.createElement("td")
+					let btnDettagli=document.createElement("button")
+					btnDettagli.textContent="Dettagli"
+					btnDettagli.classList.add("btn","btn-success")
+					btnDettagli.addEventListener("click", function() {
+						document.querySelector(".row:nth-of-type(3) > div:nth-of-type(2)").style.display="block"
+						let idMarca =automobile.id;
+						let nome = nomeModello;
+						let alimentazione = currentModel[0].alimentazione;
+						let cilindrata = currentModel[0].cilindrata;
+						let targa = automobile.targa;
+						let colore = automobile.colore;
+						let anno = automobile.anno;
+						let km = automobile.km;
+						console.log(idMarca, nome, alimentazione, cilindrata, targa, colore, anno, km);
+						$("#txtId").val(idMarca);
+						$("#txtNome").val(nome);
+						$("#txtAlimentazione").val(alimentazione);
+						$("#txtCilindrata").val(cilindrata);
+						$("#txtTarga").val(targa);
+						$("#txtColore").val(colore);
+						$("#txtAnno").val(anno);
+						$("#txtKm").val(km);
+					});
+					td.appendChild(btnDettagli)
+					tr.appendChild(td)
+					td=document.createElement("td")
+					let btnElimina=document.createElement("button")
+					btnElimina.textContent="Elimina"
+					btnElimina.classList.add("btn","btn-secondary")
+					btnElimina.addEventListener("click", function() {
+					
+						let requestElimina=inviaRichiesta("DELETE","/automobili/"+automobile.id)
+						requestElimina.catch(errore)
+						requestElimina.then(function (response){
+							console.log(response)
+				
+						})
 
+					})
+					td.appendChild(btnElimina)
+					tr.appendChild(td)
+					tbody.appendChild(tr)
+				}
+			
+			})
+		}
+	})
+	let btnAggiorna=document.getElementById("btnAggiorna")
+	btnAggiorna.addEventListener("click", function() {
+		let txtPrezzo=document.getElementById("txtPrezzo")
+		let txtId=document.getElementById("txtId")
+		if(txtPrezzo.value==""){
+			let id=txtId.value
+			let prezzo=parseInt( txtPrezzo.value)			
+			// let requestId=inviaRichiesta("PATCH","/automobili/"+id,{"prezzo":prezzo})
+			let requestId=inviaRichiesta("PATCH","/automobili/"+id,{prezzo})
+			requestId.catch(errore)
+
+				
+		}
+	})
 		
 });
