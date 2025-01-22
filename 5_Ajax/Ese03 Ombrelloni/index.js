@@ -112,9 +112,72 @@ $(document).ready(function () {
                }
             }
          }
+         let btn=document.createElement("button")
+         btn.classList.add("button","prenota")
+         btn.textContent = "Prenota"
+         _mappa.appendChild(btn)
       })
    }
    function isOccupato(id, posIniziale, posFinale) {
+      let pos = id 
+      let stato = ombrelloni[pos].stato;
+      for (let i = posIniziale; i <= posFinale; i++) { 
+         if (stato[i] !== 0) {
+            return true; 
+         }
+      }
+      return false; 
+   }
+   
+   let ombrelloniPrenotati=[]
+   function gestisciOmbrellone() {
+      if(this.classList.contains("blue")){
+         this.classList.remove("blue")
+         let pos=ombrelloniPrenotati.findIndex((item) => {
+            return item==this.id 
+         })
+            ombrelloniPrenotati.splice(pos,1)
+         
+      }
+      else{
+         this.classList.add("blue")
+         ombrelloniPrenotati.push(parseInt(this.id))
+      }
+      console.log("xxx",ombrelloniPrenotati)
+      let button=_mappa.getElementsByTagName("button")[0]
+      if(ombrelloniPrenotati.length>0){
+         button.classList.add("buttonEnabled")
+         button.addEventListener("click",prenota);
+      }else{
+         button.classList.remove("buttonEnabled")
+         button.removeEventListener("click",prenota);
+      }
+   }
+   function prenota() {
+      let dateInizio = new Date(_dataInizio.value)
+      let dateFine = new Date(_dataFine.value)
+
+      let posIniziale = (dateInizio - new Date(_dataInizio.min)) / (MMG)
+      let posFinale = (dateFine - new Date(_dataInizio.min)) / (MMG)
+
+      for(let id of ombrelloniPrenotati){
+         let pos=id
+         for (let i = posIniziale; i <= posFinale; i++) { 
+            ombrelloni[pos].stato[i]=user_id;
+         }
+         let count=0;
+         let request = inviaRichiesta("PATCH", "/ombrelloni/"+id,{"stato":ombrelloni[pos].stato})
+         request.catch(errore);
+         request.then(function (response) {
+            console.log(response.data);
+            count++;
+            if (count<ombrelloniPrenotati.length) {
+               alert("Prenotazione eseguita correttamente");
+            }
+         })
+
+      }
+
 
    }
 })
