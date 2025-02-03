@@ -53,7 +53,7 @@ $(function () {
         visualizzaQuadro();
     }
 
-    async function visualizzaQuadro() {
+    async function visualizzaQuadro(pos) {
         let quadro = quadri[indiceQuadro];
         _info.innerHTML = ""; 
 
@@ -74,8 +74,14 @@ $(function () {
         div = document.createElement("div");
         _info.appendChild(div);
         div.innerHTML = `Like: <b>${quadro.nLike}</b>`;
-        let imgLike=` <img src="./img/like.jpg" style="width:30px"></img>`
-        div.innerHTML+=imgLike;
+        let imgLike=document.createElement("img");
+        imgLike.src="./img/like.jpg";
+        imgLike.style.width="30px";
+        imgLike.style.cursor="pointer"
+        imgLike.addEventListener("click",function(){
+            aggiungiLike(quadro)
+        })
+        div.appendChild(imgLike);
 
         _img.innerHTML = ""; 
         let img = document.createElement("img");
@@ -109,6 +115,16 @@ $(function () {
         }
         _btnPrev.disabled = false;
     })
+
+    function aggiungiLike(quadro) {
+        let path="/quadri/"+quadro.id
+        let response=inviaRichiesta("PATCH",path,{"nLike":(quadro.nLike+1)})
+        response.catch(errore);
+        response.then(function(response){
+            console.log(response)
+            visualizzaQuadro(quadro)
+        })
+      }
 });
 
 function random(min, max) {
