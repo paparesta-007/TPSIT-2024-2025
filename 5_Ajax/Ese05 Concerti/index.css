@@ -1,0 +1,29 @@
+
+.dropdown {
+	display:inline;
+	margin-right:10px;
+}
+
+.dropdown-menu.show {
+    display: flex;
+	padding: 10px 0 10px 10px !important;
+	color: rgb(90, 89, 89) !important;
+}
+
+.dropdown-menu a{
+	margin-bottom: 10px;
+	color: rgb(90, 89, 89) !important;
+}
+#divDettagli{
+	margin: 0 auto !important;
+	font-size: 12pt;
+	padding-top: 12pt;
+	display: flex !important;
+	padding: 15px;
+	border-radius: 5px;
+
+	flex-direction: column;
+	align-items: center !important; 
+	justify-self: center;
+	
+}
