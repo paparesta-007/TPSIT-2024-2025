@@ -39,9 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
       a.href = "#";
       a.textContent = "Tutti";
       a.addEventListener("click", function () {
-        selectedType.genere = "";
+        selectedType.citta = "";
+        _lstCitta.querySelector("button").textContent = "Tutti";
         creaTabella(selectedType);
         console.log(selectedType);
+
       });
       containerCitta.appendChild(a);
       for (const currentCitta of datiCitta) {
@@ -53,9 +55,11 @@ document.addEventListener("DOMContentLoaded", function () {
           selectedType.citta = currentCitta.citta;
           creaTabella(selectedType);
           console.log(selectedType);
+          _lstCitta.querySelector("button").textContent = currentCitta.citta; 
         });
         a.textContent = currentCitta.citta;
         containerCitta.appendChild(a);
+        
       }
     }
     function creaListGeneri(datiGeneri) {
@@ -65,6 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
       a.addEventListener("click", function () {
         selectedType.genere = "";
         creaTabella(selectedType);
+        _lstGeneri.querySelector("button").textContent = "Tutti";
+
         console.log(selectedType);
       });
       containerGenere.appendChild(a);
@@ -77,7 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
           selectedType.genere = currentGenere.genere;
           creaTabella(selectedType);
           console.log(selectedType);
+          _lstGeneri.querySelector("button").textContent = currentGenere.genere;
         });
+
         a.textContent = currentGenere.genere;
         containerGenere.appendChild(a);
       }
@@ -100,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
       td.textContent = index++;
       tr.appendChild(td);
       _tbody.appendChild(tr);
+      
 
       td = document.createElement("td");
       td.textContent = concerto.cantante;
@@ -192,8 +201,10 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = response.data;
             console.log(data);
             creaTabella(selectedType)
+            
             alert("Congratulazioni, hai comprato il/i biglietti!")
             } catch (error) {
+
                 alert(error)
             }
         }
