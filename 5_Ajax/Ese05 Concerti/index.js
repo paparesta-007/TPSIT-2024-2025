@@ -191,7 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     function prenotaConcerto(concerto) {
         let biglietti=prompt("Inserisci quanti biglietti da comprare")
-        if(isNaN(biglietti) || biglietti<=0) return alert("Devi inserire un numero maggiore di 0")
+        // max 10 ticket
+        if(parseInt(biglietti)>10) return alert("Puoi comprare al massimo 10 biglietti")
         let idConcerto=concerto.id
         let postiPrenotati=parseInt(concerto.postiPrenotati)
         aggiorna()
@@ -202,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(data);
             creaTabella(selectedType)
             
-            alert("Congratulazioni, hai comprato il/i biglietti!")
+            alert(`Congratulazioni, hai comprato ${biglietti} biglietti!`)
             } catch (error) {
 
                 alert(error)
