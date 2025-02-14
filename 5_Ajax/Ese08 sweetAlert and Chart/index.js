@@ -34,6 +34,7 @@ $(document).ready(function(){
 			cancelButtonColor: "#d33",
 
 		})
-		
+
 	})
+	
 })
