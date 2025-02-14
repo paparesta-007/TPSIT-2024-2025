@@ -122,66 +122,25 @@ document.addEventListener("DOMContentLoaded", function() {
 					console.log(dataPosti)
 					let i = 1;
         			let riga = 0;
-					let col9=0
 					for (let fila = 0; fila < nomeFila.length; fila++) {
 						let colInizio = inizioFine[fila].inizio;
 						let colFine = inizioFine[fila].fine;
 						let colonna = 0;
 						for (let col = colInizio; col <= colFine; col++) {
-							
 							let div = document.createElement("div");
-							
 							div.classList.add("poltrona");
-							let nomePosto = nomeFila[fila] + nomeColonna[colonna];
-							// div.textContent = nomePosto;
-					
-							console.log(nomePosto);
-							div.id = nomePosto;
-							// console.log(dataPosti[idPosto].statoPrenotazione)
 							
-					
 							let posY = Y0 + (17.5 * fila);
 							if (fila > 9) {
-								posY += 24; // Spazio per il corridoio orizzontale
-								
+								posY += 24;
 							}
 							let posX = X0 + (16.5 * (col - colInizio));
 							if(fila>9){
-								switch (fila) {
-									case 10:
-										posX+=16.5
-										break;
-									case 10:
-										posX+=16.5
-										break;
-									case 11:
-										posX+=16.5*2
-										break;
-									case 12:
-										posX+=16.5*2
-										break
-									case 13:
-										posX+=16.5*3
-										break;
-									case 14:
-										posX+=16.5*3
-										break;
-
-									case 15:
-										posX+=16.5*4
-										break
-									case 16:
-										posX+=16.5*4
-										break;
-									case 17:
-										posX+=16.5*4
-										break;
-									default:
-										break;
-								}
+								let spostamento = inizioFine[fila].inizio - inizioFine[10].inizio;
+								posX += 16.5 *( spostamento+1);
 							}
 							if (col > 13) {
-								posX += 33; // Spazio per il corridoio verticale
+								posX += 33; 
 							}
 					
 							div.style.left = posX + "px";
@@ -209,7 +168,6 @@ document.addEventListener("DOMContentLoaded", function() {
 								div.style.backgroundColor = VERDE;
 							}
 							div.style.cursor = "pointer";
-							// div.textContent=idPosto
 						}
 						riga++;
 					}

@@ -34,6 +34,18 @@ $(document).ready(function(){
 			cancelButtonColor: "#d33",
 
 		})
+		let nPeople=result.value
+		console.log(nPeople)
+		let nazioni=[];
+		let request=inviaRichiesta("GET","/api",{"results":nPeople})
+		request.catch(errore);
+		request.then(function(responseHttp){
+			let people=responseHttp.data;
+			for(const person of people){
+				let nazione=person.nat;
+				console.log(nazione)
+			}
+		})
 
 	})
 	

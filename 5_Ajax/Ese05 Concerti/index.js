@@ -152,42 +152,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayDettagli(concerto) {
-      _divDettagli.innerHTML = "";
-      let h3 = document.createElement("h3");
-      h3.textContent = "Dettagli del concerto";
-      _divDettagli.appendChild(h3);
-      let span = document.createElement("span");
-      span.style.paddingTop="12px"
-      span.innerHTML = "<b>Data:</b> " + concerto.data+"<br/>";
-      _divDettagli.appendChild(span);
-
-      span = document.createElement("span");
-      span.style.paddingTop="12px"
-      span.innerHTML = "<b>Citta:</b> " + concerto.sede.citta+"<br/>";
-      _divDettagli.appendChild(span);
-
-      span = document.createElement("span");
-      span.style.paddingTop="12px"
-      span.innerHTML = "<b>Struttura:</b> " + concerto.sede.struttura+"<br/>";
-      _divDettagli.appendChild(span);
-
-      span = document.createElement("span");
-      span.style.padding="12px 0"
-      let nPosti=parseInt(concerto.sede.nPosti)
-      let postiPrenotati=parseInt(concerto.postiPrenotati)
-      console.log(nPosti, postiPrenotati)
-      span.innerHTML = "<b>Posti liberi:</b> "+(nPosti-postiPrenotati)+"<br/>"
-      _divDettagli.appendChild(span);
-
-
-      let okButton = document.createElement("button");
-      okButton.textContent = "Ok";
-      okButton.addEventListener("click", function () {
-        _divDettagli.innerHTML=""
+      let nPosti = parseInt(concerto.sede.nPosti)
+      let postiPrenotati = parseInt(concerto.postiPrenotati)
+      let postiLiberi = nPosti - postiPrenotati
+      
+      Swal.fire({
+        title: 'Dettagli del concerto',
+        html: `
+          <b>Data:</b> ${concerto.data}<br>
+          <b>Città:</b> ${concerto.sede.citta}<br>
+          <b>Struttura:</b> ${concerto.sede.struttura}<br>
+          <b>Posti liberi:</b> ${postiLiberi}
+        `,
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#28a745'
       });
-      okButton.classList.add("btn", "btn-success");
-      _divDettagli.appendChild(okButton);
-      console.log(span);
     }
     function prenotaConcerto(concerto) {
         let biglietti=prompt("Inserisci quanti biglietti da comprare")

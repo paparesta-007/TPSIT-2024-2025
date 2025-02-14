@@ -7127,7 +7127,7 @@
     {
       "id": "39",
       "nome": "S8",
-      "statoPrenotazione": ""
+      "statoPrenotazione": "booked"
     },
     {
       "id": "40",
@@ -7407,7 +7407,7 @@
     {
       "id": "95",
       "nome": "Q8",
-      "statoPrenotazione": ""
+      "statoPrenotazione": "booked"
     },
     {
       "id": "96",
@@ -7422,7 +7422,7 @@
     {
       "id": "98",
       "nome": "Q2",
-      "statoPrenotazione": ""
+      "statoPrenotazione": "booked"
     },
     {
       "id": "99",
@@ -7522,7 +7522,7 @@
     {
       "id": "118",
       "nome": "P18",
-      "statoPrenotazione": ""
+      "statoPrenotazione": "booked"
     },
     {
       "id": "119",
