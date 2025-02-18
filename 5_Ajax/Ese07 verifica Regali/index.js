@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       $(formCheck).insertBefore($("#btnInvia"), formCheck);
     });
   }
+  
   let btnInvia = document.getElementById("btnInvia");
   btnInvia.addEventListener("click", function () {
     if ($("input[type='radio']:checked").length != 0) {
@@ -73,60 +74,70 @@ document.addEventListener("DOMContentLoaded", function () {
         requestNegozi.then(function (HTTPresponseNegozi) {
           console.log(HTTPresponseNegozi.data);
 
-          Promise.all(
-            HTTPresponseNegozi.data.map((negozio) => {
-              return inviaRichiesta("GET", "/regali", {
-                codNegozio: negozio.id,
-              });
-            })
-          )
-            .then((responses) => {
-              let regali = [];
-              responses.forEach((response) => {
-                regali = regali.concat(response.data);
-              });
-              console.log(regali);
-              let n = random(0, regali.length - 1);
-              regaloVincente = regali[n];
-              console.log("Random regalo:", regaloVincente);
-              _page1.style.display = "none";
-              _page2.style.display = "block";
+          let regaloIds = [];
+          
+          // Loop through all stores and get the gifts' IDs
+          for (let negozio of HTTPresponseNegozi.data) {
+            inviaRichiesta("GET", "/regali", {codNegozio: negozio.id,})
+            .then(function (response) {
+                let regali = response.data;
+                for (let regalo of regali) 
+                {
+                  regaloIds.push(regalo.id);
+                }
 
-              _page2.querySelector("img").src =
-                "./img/img" + regaloVincente.id + ".jpg";
-              _page2
-                .querySelectorAll("p")[0]
-                .querySelectorAll("span")[1].textContent = regaloVincente.nome;
-              _page2
-                .querySelectorAll("p")[1]
-                .querySelectorAll("span")[1].textContent =
-                regaloVincente.descrizione;
+              // Pick a random gift ID from the array
+              if (regaloIds.length > 0) {
+                let n = random(0, regaloIds.length - 1);
+                let selectedRegaloId = regaloIds[n];
 
-              let request = inviaRichiesta("GET", "/negozi/", {
-                id: regaloVincente.codNegozio,
-              }).catch(errore);
-              request.then(function (response) {
-                console.log(response.data);
-                let negozio = response.data[0];
-                console.log(negozio); // Sposta il console.log qui
-                visualizza(negozio.nome, negozio.indirizzo);
-              });
-              function visualizza(nome, indirizzo) {
-                _page2
-                  .querySelectorAll("p")[3]
-                  .querySelectorAll("span")[1].textContent = nome;
-                _page2
-                  .querySelectorAll("p")[4]
-                  .querySelectorAll("span")[1].textContent = indirizzo;
+                // Fetch the selected regalo data
+                inviaRichiesta("GET", "/regali/" + selectedRegaloId)
+                  .then(function (regaloData) {
+                    regaloVincente = regaloData.data;
+                    console.log("Random regalo:", regaloVincente);
+                    _page1.style.display = "none";
+                    _page2.style.display = "block";
+
+                    _page2.querySelector("img").src =
+                      "./img/img" + regaloVincente.id + ".jpg";
+                    _page2
+                      .querySelectorAll("p")[0]
+                      .querySelectorAll("span")[1].textContent = regaloVincente.nome;
+                    _page2
+                      .querySelectorAll("p")[1]
+                      .querySelectorAll("span")[1].textContent =
+                      regaloVincente.descrizione;
+
+                    let request = inviaRichiesta("GET", "/negozi/", {
+                      id: regaloVincente.codNegozio,
+                    }).catch(errore);
+                    request.then(function (response) {
+                      console.log(response.data);
+                      let negozio = response.data[0];
+                      visualizza(negozio.nome, negozio.indirizzo);
+                    });
+                    
+                    function visualizza(nome, indirizzo) {
+                      _page2
+                        .querySelectorAll("p")[3]
+                        .querySelectorAll("span")[1].textContent = nome;
+                      _page2
+                        .querySelectorAll("p")[4]
+                        .querySelectorAll("span")[1].textContent = indirizzo;
+                    }
+                  })
+                  .catch(errore);
               }
-            })
-            .catch(errore);
+            }).catch(errore);
+          }
         });
       }
     } else {
       alert("Seleziona una città");
     }
   });
+
   document.querySelector("#btnConferma").addEventListener("click", function () {
     if (regaloVincente) {
       let datiIndirizzo;
