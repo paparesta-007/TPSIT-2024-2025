@@ -6,14 +6,14 @@ $(document).ready(function () {
 	const canvasContainer = document.getElementById("canvas");
 	const canvas = document.querySelector("canvas");
 	const btnInvia = document.getElementById("btnInvia");
-
+	let backgroundColor=[]
 	$("a").hide();
 	$(table).hide();
 	$(canvasContainer).hide()
 
 	let chart;
 	// spiega
-
+	$(canvasContainer).hide()
 
 
 	btnInvia.addEventListener("click", async function () {
@@ -80,7 +80,43 @@ $(document).ready(function () {
 			//creazione grafico
 			$(canvasContainer).show()
 			let keys = nazioni.map(item => item.nazione);
-			
+			let values=nazioni.map(item=>item.persone)
+			for(let i=0;i<keys.length;i++){
+				backgroundColor.push(`rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)}`)
+			}
+			//al suo interno trova il valore massimo
+			let max=Math.max(...values)
+			let chartOptions={
+				"type":"bar",
+				"data":{
+					"labels":keys,
+					"datasets":[
+						{
+							"label":"Persone",
+							"data":values,
+							"backgroundColor":backgroundColor,
+							"borderColor":"#000",
+							"borderWidth":1
+						}
+					]
+				},
+				"options":{
+					"scales":{
+						"y":{
+							"suggestedMax":max+1,
+
+						}
+					}
+				}
+			}
+			$("canvasContainer").show()
+			if(chart){
+				chart.destroy()
+			}
+			chart=new Chart(canvas,chartOptions)
+			$("a").eq(1).show().on("click",function(){
+				this.href=chart.toDataURL("chart.png")
+			})
 		})
 
 	})
